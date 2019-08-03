@@ -1,0 +1,75 @@
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="trackerForm" (submit)="addTracker()">
+      <div class="form-group">
+          <label class="col-md-4">Tracker Name</label>
+          <input type="text" class="form-control" placeholder="Apartments" formControlName="tracker_name" />
+          <div 
+            *ngIf="trackerForm.controls['tracker_name'].invalid && (trackerForm.controls['tracker_name'].dirty || trackerForm.controls['tracker_name'].touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="trackerForm.controls['tracker_name'].errors.required">
+              Tracker name is required
+            </div>
+          </div>
+        </div>
+      <div class="form-group">
+        <label class="col-md-4">Craigslist Root URL</label>
+        <input type="text" class="form-control" placeholder="https://raleigh.craigslist.org/search/apa" formControlName="root_url" />
+        <div 
+          *ngIf="trackerForm.controls['root_url'].invalid && (trackerForm.controls['root_url'].dirty || trackerForm.controls['root_url'].touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="trackerForm.controls['root_url'].errors.required">
+            Root URL is required.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4">Search Text</label>
+        <input type="text" class="form-control" placeholder="2 bedroom" formControlName="search_text"  />
+        <div 
+          *ngIf="trackerForm.controls['search_text'].invalid && (trackerForm.controls['search_text'].dirty || trackerForm.controls['search_text'].touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="trackerForm.controls['search_text'].errors.required">
+            Search text is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4">Min Price</label>
+        <input type="text" class="form-control" placeholder="0" formControlName="min_price"  />
+        <div 
+          *ngIf="trackerForm.controls['min_price'].invalid && (trackerForm.controls['min_price'].dirty || trackerForm.controls['min_price'].touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="trackerForm.controls['min_price'].errors.required">
+            Min Price is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4">Max Price</label>
+        <input type="text" placeholder="5000" formControlName="max_price"  />
+        <div 
+          *ngIf="trackerForm.controls['max_price'].invalid && (trackerForm.controls['max_price'].dirty || trackerForm.controls['max_price'].touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="trackerForm.controls['max_price'].errors.required">
+            Max price is required
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button 
+          type="submit" 
+          class="btn btn-primary"
+          [disabled]="trackerForm.pristine || trackerForm.invalid"
+        >
+          Save Tracker
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
