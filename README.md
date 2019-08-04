@@ -30,7 +30,9 @@ In `src/app/tracker.service.js`, make sure that the "uri" property matches what 
 
 In `api/DB.js`, make sure that the port in the mongo connection string matches the port mongodb is running on.
 
-In `craigslist-scraper/craigslist-scraper.py`, make sure that the pymongo.MongoClient connection string matches your mongodb port.
+In `craigslist-scraper/craigslist-scraper.py`, make sure that the pymongo.MongoClient connection string matches your mongodb port, and that the yagmail.SMTP string matches the gmail address that you'd like to send notifications from.
+
+Run `craigslist-scraper/craigslist-scraper.py`, once, to make sure that your email password is saved in the keyring for your OS.
 
 Set up a cron job for the `craigslist-scraper/craigslist-scraper.py` script so that it runs at the minimum interval you want to be notified of listing updates.
 
