@@ -10,19 +10,10 @@ export class TrackerService {
 
   constructor(private http: HttpClient) { }
 
-  addTracker(tracker_name, root_url, search_text, min_price, max_price) {
-    const tracker = {
-      tracker_name,
-      root_url,
-      search_text,
-      min_price,
-      max_price,
-    };
-
+  addTracker(tracker) {
     console.log('saving', {tracker});
 
-    return this.http.post(`${this.uri}/add`, tracker)
-      .subscribe(res => console.log('saved', {res}));
+    return this.http.post(`${this.uri}/add`, {tracker});
   }
 
   listTrackers() {
@@ -33,17 +24,8 @@ export class TrackerService {
     return this.http.get(`${this.uri}/${id}`);
   }
 
-  updateTracker(id, tracker_name, root_url, search_text, min_price, max_price) {
-    const tracker = {
-      tracker_name,
-      root_url,
-      search_text,
-      min_price,
-      max_price,
-    };
-
-    return this.http.post(`${this.uri}/${id}`, tracker)
-      .subscribe(tracker => tracker);
+  updateTracker(id, tracker) {
+    return this.http.post(`${this.uri}/update/${id}`, {tracker});
   }
 
   deleteTracker(id) {

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TrackerService } from '../tracker.service';
 import Tracker from '../models/Tracker';
 
-
 @Component({
   selector: 'app-tracker-edit',
   templateUrl: './tracker-edit.component.html',
@@ -31,22 +30,22 @@ export class TrackerEditComponent implements OnInit {
       search_text: ['', Validators.required],
       min_price: ['', Validators.required],
       max_price: ['', Validators.required],
+      notify_every: ['', Validators.required],
+      notify_unit: ['', Validators.required],
+      notify_email: ['', Validators.required],
     });
   }
 
   saveTracker() {
     if (this.trackerForm.dirty && this.trackerForm.valid) {
-      const trackerVals = this.trackerForm.value;     
       this.route.params.subscribe(params => {
         this.ts.updateTracker(
           params.id,
-          trackerVals.tracker_name,
-          trackerVals.root_url,
-          trackerVals.search_text,
-          trackerVals.min_price,
-          trackerVals.max_price,
-        );
-      });
+          this.trackerForm.value,
+        ).subscribe(tracker => {
+
+        });
+      })
     }
   }
 

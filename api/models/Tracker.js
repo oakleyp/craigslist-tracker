@@ -17,6 +17,18 @@ const Tracker = new Schema({
   max_price: {
     type: Number,
   },
+  notify_email: {
+    type: String,
+  },
+  notify_every: {
+    type: Number,
+  },
+  notify_unit: {
+    type: String,
+  },
+  notify_interval: {
+    type: Number,
+  }
 }, {
   collection: 'tracker',
 });

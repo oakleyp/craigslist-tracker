@@ -6,6 +6,8 @@
       <td>Search Text</td>
       <td>Min Price</td>
       <td>Max Price</td>
+      <td>Notification Email</td>
+      <td>Notification Interval</td>
       <td colspan="2">Actions</td>
     </tr>
   </thead>
@@ -16,6 +18,8 @@
       <td>{{ tracker.search_text }}</td>
       <td>{{ tracker.min_price }}</td>
       <td>{{ tracker.max_price }}</td>
+      <td>{{ tracker.notify_email }}</td>
+      <td>{{ tracker.notify_every }} {{ tracker.notify_unit }}</td>
 
       <td><a [routerLink]="['edit', tracker._id]" class="btn btn-primary">Edit</a></td>
       <td><a (click)="deleteTracker(tracker._id)" class="btn btn-danger">Delete</a></td>

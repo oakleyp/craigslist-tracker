@@ -22,6 +22,10 @@ export class TrackerAddComponent implements OnInit {
       search_text: ['', Validators.required],
       min_price: ['', Validators.required],
       max_price: ['', Validators.required],
+      notify_every: ['', Validators.required],
+      notify_unit: ['', Validators.required],
+      notify_email: ['', Validators.required],
+
     });
 
     console.log('trackerForm created', this.trackerForm);
@@ -29,14 +33,7 @@ export class TrackerAddComponent implements OnInit {
 
   addTracker() {
     if (this.trackerForm.dirty && this.trackerForm.valid) {
-      const trackerVals = this.trackerForm.value;
-      this.ts.addTracker(
-        trackerVals.tracker_name, 
-        trackerVals.root_url, 
-        trackerVals.search_text, 
-        trackerVals.min_price, 
-        trackerVals.max_price
-      );
+      this.ts.addTracker(this.trackerForm.value);
     }
   }
 

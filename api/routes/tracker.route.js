@@ -2,13 +2,15 @@ const express = require('express');
 const app = express();
 const trackerRoutes = express.Router();
 
+const timeConv = require('../lib/timeConv');
+
 const Tracker = require('../models/Tracker');
 
 trackerRoutes.route('/add').post(function(req, res) {
-  const tracker = new Tracker(req.body);
+  const tracker = new Tracker(req.body.tracker);
 
   tracker.save()
-    .then(tracker => {
+    .then(body => {
       console.log('tracker', tracker);
       res.status(201).json(tracker);
     })
@@ -40,31 +42,31 @@ trackerRoutes.route('/:id').get(function (req, res) {
 }); 
 
 trackerRoutes.route('/update/:id').post(function(req, res) {
+  // console.log('got', req.params.id, body)
   Tracker.findById(req.params.id, function(err, tracker) {
-    if (!tracker) {
-      return next(new Error(`Requested ID not found ${req.params.id}`));
-    } else {
-      tracker.tracker_name = req.body.tracker_name;
-      tracker.root_url = req.body.root_url;
-      tracker.search_text = req.body.search_text;
-      tracker.min_price = req.body.min_price;
-      tracker.max_price = req.body.max_price;
+      if (err) {
+        res.json({message: `failed to save tracker: ${err}`});
+      } else {
+        //todo abstraction for setting updated properties and returning id+updated
 
-      //todo abstraction for setting updated properties and returning id+updated
-      tracker.save()
-        .then(tracker => {
-          res.json({tracker: {
-            id: tracker.id,
-            root_url: tracker.root_url,
-            search_text: tracker.search_text,
-            min_price: tracker.min_price,
-            max_price: tracker.max_price,
-          }});
-        })
-        .catch(err => {
-          res.status(400).send(`Failed to update tracker ${err}`);
-        });
-    }
+        // update tracker object and notify_interval
+        Object.assign(
+          tracker, 
+          req.body.tracker, 
+        );
+
+        tracker.notify_interval = timeConv.convertToNotifyInterval(tracker.notify_every, tracker.notify_unit);
+
+        console.log('update is ', tracker);
+
+        tracker.save()
+          .then(tracker => {
+            res.json({tracker});
+          })
+          .catch(err => {
+            res.status(400).send(`Failed to update tracker ${err}`);
+          });
+      }
   });
 });
 
