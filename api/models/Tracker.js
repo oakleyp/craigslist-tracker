@@ -28,6 +28,9 @@ const Tracker = new Schema({
   },
   notify_interval: {
     type: Number,
+  },
+  last_notified: {
+    type: Date,
   }
 }, {
   collection: 'tracker',
