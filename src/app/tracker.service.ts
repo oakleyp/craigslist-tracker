@@ -11,8 +11,6 @@ export class TrackerService {
   constructor(private http: HttpClient) { }
 
   addTracker(tracker) {
-    console.log('saving', {tracker});
-
     return this.http.post(`${this.uri}/add`, {tracker});
   }
 
@@ -29,7 +27,6 @@ export class TrackerService {
   }
 
   deleteTracker(id) {
-    console.log('deleting');
     return this.http.delete(`${this.uri}/${id}`);
   }
 }

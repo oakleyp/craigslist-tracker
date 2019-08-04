@@ -11,6 +11,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TrackerService } from './tracker.service';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { TrackerService } from './tracker.service';
     TrackerAddComponent,
     TrackerGetComponent,
     TrackerEditComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,

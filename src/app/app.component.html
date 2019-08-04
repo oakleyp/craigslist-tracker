@@ -8,10 +8,16 @@
           Create a new tracker
         </a>
       </li>
+      <li class="nav-item">
+        <a routerLink="tracker" class="nav-link" routerLinkActive="active">
+          All trackers
+        </a>
+      </li>
     </ul>
   </div>
 </nav>
 
 <div class="container">
+  <app-messages></app-messages>
   <router-outlet></router-outlet>
 </div>

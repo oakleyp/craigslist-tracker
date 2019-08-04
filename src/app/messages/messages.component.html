@@ -1,0 +1,7 @@
+<div *ngFor="let message of messageService.messages">
+  <div class="alert alert-{{message.severity}}">
+    <!-- todo make close clear message -->
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> 
+    <strong *ngIf="message.strongText">{{ message.strongText }}</strong> {{message.text}}
+  </div>
+</div>
