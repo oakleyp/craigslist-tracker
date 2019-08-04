@@ -3,12 +3,21 @@ import urllib.parse
 import feedparser
 import pymongo
 import sys
+import yagmail
 from datetime import datetime
-from pymongo import errors
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client['ng-craigslist-tracker']
 trackers_coll = db['tracker']
+
+yag = yagmail.SMTP('oakleys.craigslist.tracker@gmail.com')
+
+def email_user(email, subject, body):
+  yag.send(
+    to=email,
+    subject=subject,
+    contents=body,
+  )
 
 def get_updated_tracker_listings(trackers):
   result = {}
@@ -24,11 +33,11 @@ def get_updated_tracker_listings(trackers):
                 { '$or': [
                   { '$lt': [ '$last_notified_date', 1 ] }, # if there's never been a notification for this listing
                   { '$and': [
-                    { '$gte': [ # we're due for a notification
+                    { '$gte': [ # and we're due for a notification
                       { '$subtract': [datetime.now(), '$last_notified_date'] },
                       tracker['notify_interval']
                     ] },
-                    { '$gt': [ # this has been updated since the last time it was in a notification
+                    { '$gt': [ # and this has been updated since the last time it was in a notification
                       '$last_update_date', '$last_notified_update'
                     ] },
                   ] },
@@ -95,8 +104,20 @@ def update_trackers(trackers):
         upsert=True,
       )
 
-def format_listings_email(listings):
-  email = ""
+def format_listings_email(tracker, listings):
+  result = "The following listings have been updated:\n\n"
+  result_url = "{}?query={}".format(tracker['root_url'], urllib.parse.quote_plus(tracker['search_text']))
+
+  for listing in listings:
+    result += """\
+      Title: {}\n\
+      Link: {}\n\
+      \n\n\
+    """.format(listing['title'], listing['_id'])
+
+  result += "Original Query: {}".format(result_url)
+
+  return result
 
 
 def notify_users(trackers):
@@ -120,5 +141,10 @@ def notify_users(trackers):
       )
 
     print ('notifying for', tracker['tracker_name'], tracker['notify_email'])
+    email_user(
+      tracker['notify_email'],
+      "Updates for tracker {}".format(tracker['tracker_name']),
+      format_listings_email(tracker, listings),
+    )
 
 notify_users(trackers_coll)
