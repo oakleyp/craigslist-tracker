@@ -1,4 +1,4 @@
-# This is a first script in python, here goes nothing
+# This is a first script in python, I'm sure I will grow to hate it as I learn more
 import urllib.parse
 import feedparser
 import pymongo
@@ -109,10 +109,10 @@ def format_listings_email(tracker, listings):
   result_url = "{}?query={}".format(tracker['root_url'], urllib.parse.quote_plus(tracker['search_text']))
 
   for listing in listings:
-    result += """\
-      Title: {}\n\
-      Link: {}\n\
-      \n\n\
+    result += """
+      Title: {}
+      Link: {}
+      \n
     """.format(listing['title'], listing['_id'])
 
   result += "Original Query: {}".format(result_url)

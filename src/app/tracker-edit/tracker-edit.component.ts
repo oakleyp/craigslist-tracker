@@ -15,7 +15,7 @@ export class TrackerEditComponent implements OnInit {
 
   trackerForm: FormGroup;
   tracker: Tracker = new Tracker();
-  notify_units: string[] = [];
+  static notify_units: string[] = ['days', 'hours', 'minutes'];
 
   constructor(
     private ts: TrackerService, 
@@ -25,7 +25,6 @@ export class TrackerEditComponent implements OnInit {
     private ms: MessageService,
   ) { 
     this.createForm();
-    this.notify_units = ['days', 'hours', 'minutes'];
   }
 
   createForm() {
