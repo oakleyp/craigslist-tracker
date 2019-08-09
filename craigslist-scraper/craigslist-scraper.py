@@ -72,7 +72,6 @@ def get_listings(tracker, count):
 
   while rcount < count:
     url = build_search_url(tracker, result_token)
-    print ('got url', url)
     feed = feedparser.parse(url)
     if len(feed['entries']) == 0: return results
 
@@ -133,10 +132,8 @@ def format_listings_email(tracker, listings):
 
 def notify_users(trackers):
   updated_listings = get_updated_tracker_listings(trackers)
-  print ('updated listings', updated_listings)
 
   for tracker_id, listings in updated_listings.items():
-    print ('listing for', listings)
     if (len(listings)) == 0: continue
 
     # Update the last time the user was notified for this tracker
