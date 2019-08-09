@@ -13,7 +13,7 @@ import Tracker from '../models/Tracker';
 export class TrackerAddComponent implements OnInit {
 
   trackerForm: FormGroup;
-  notify_units: string[] = [];
+  notify_units: string[] = ['days', 'hours', 'minutes'];
 
   constructor(
     private fb: FormBuilder, 
@@ -22,7 +22,6 @@ export class TrackerAddComponent implements OnInit {
     private router: Router,
   ) { 
     this.createForm();
-    this.notify_units = ['days', 'hours', 'minutes'];
   }
 
   createForm() {

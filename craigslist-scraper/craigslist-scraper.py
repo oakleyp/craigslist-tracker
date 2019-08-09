@@ -54,14 +54,25 @@ def get_updated_tracker_listings(trackers):
 
   return result
 
+def build_search_url(tracker, result_token):
+  # required query tokens
+  url = "{}?format=rss&query={}{}".format(tracker['root_url'], urllib.parse.quote_plus(tracker['search_text']), result_token)
+
+  # optional query tokens
+  url += ("&min_price={}".format(tracker['min_price']) if tracker['min_price'] else "")
+  url += ("&max_price={}".format(tracker['max_price']) if tracker['max_price'] else "")
+
+  return url
+
 # get a given number of listings given a tracker object
 def get_listings(tracker, count):
   rcount = 0
   results = []
-  url_token = ""
+  result_token = ""
 
   while rcount < count:
-    url = "{}?format=rss&query={}{}".format(tracker['root_url'], urllib.parse.quote_plus(tracker['search_text']), url_token)
+    url = build_search_url(tracker, result_token)
+    print ('got url', url)
     feed = feedparser.parse(url)
     if len(feed['entries']) == 0: return results
 
@@ -79,7 +90,7 @@ def get_listings(tracker, count):
       results.append(item)
       rcount += 1
 
-    url_token = "&s={}".format(rcount) # start the next RSS request from the current result number
+    result_token = "&s={}".format(rcount) # start the next RSS request from the current result number
 
   return results
 
@@ -122,9 +133,11 @@ def format_listings_email(tracker, listings):
 
 def notify_users(trackers):
   updated_listings = get_updated_tracker_listings(trackers)
+  print ('updated listings', updated_listings)
 
   for tracker_id, listings in updated_listings.items():
-    if (len(listings)) == 0: return
+    print ('listing for', listings)
+    if (len(listings)) == 0: continue
 
     # Update the last time the user was notified for this tracker
     tracker = trackers.find_one(tracker_id)

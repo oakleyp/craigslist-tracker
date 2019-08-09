@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TrackerService } from '../tracker.service';
 import { MessageService } from '../message.service';
@@ -15,7 +15,7 @@ export class TrackerEditComponent implements OnInit {
 
   trackerForm: FormGroup;
   tracker: Tracker = new Tracker();
-  static notify_units: string[] = ['days', 'hours', 'minutes'];
+  notify_units: string[] = ['days', 'hours', 'minutes'];
 
   constructor(
     private ts: TrackerService, 
@@ -32,8 +32,8 @@ export class TrackerEditComponent implements OnInit {
       tracker_name: ['', Validators.required],
       root_url: ['', Validators.required],
       search_text: ['', Validators.required],
-      min_price: ['', Validators.required],
-      max_price: ['', Validators.required],
+      min_price: [''],
+      max_price: [''],
       notify_every: ['', Validators.required],
       notify_unit: ['', Validators.required],
       notify_email: ['', Validators.required],
@@ -71,7 +71,7 @@ export class TrackerEditComponent implements OnInit {
       this.ts.getTracker(params.id).subscribe((tracker: Tracker) => {
         this.tracker = tracker;
       })
-    })
+    });
   }
 
 }
