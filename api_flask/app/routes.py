@@ -1,5 +1,6 @@
 from app import app, db
 from app.models import Tracker, TrackerSchema
+from app.lib.tracker.timeconv import convert_to_notify_interval
 from flask import request, jsonify
 
 tracker_schema = TrackerSchema()
@@ -8,12 +9,15 @@ trackers_schema = TrackerSchema(many=True)
 @app.route('/tracker', methods=['POST'])
 def add_tracker():
   tracker_fields = TrackerSchema.Meta.fields
-  new_tracker = Tracker(*[request.json[field] for field in tracker_fields])
+
+  print(request.json)
+
+  new_tracker = Tracker(**{field:request.json['tracker'].get(field) for field in tracker_fields})
 
   db.session.add(new_tracker)
   db.session.commit()
 
-  response = {'tracker': new_tracker}
+  response = {'tracker': tracker_schema.dump(new_tracker)}
 
   return jsonify(response)
 
@@ -45,11 +49,18 @@ def update_tracker(id):
   tracker_fields = TrackerSchema.Meta.fields
 
   for field in tracker_fields:
-    tracker[field] = request.json[field]
+    tracker[field] = request.json.tracker[field]
+
+  tracker.notify_interval = convert_to_notify_interval(tracker.notify_every, tracker.notify_unit)
+
+  if tracker.notify_every is None:
+    return jsonify({'message': 'Error: invalid notify_unit or 0 specified for param notify_every'}), 400
 
   db.session.commit()
 
-  return tracker_schema.jsonify(tracker)
+  response = {'tracker': tracker_schema.jsonify(tracker)}
+
+  return jsonify(response)
 
 @app.route('/tracker/<id>', methods=['DELETE'])
 def delete_tracker(id):

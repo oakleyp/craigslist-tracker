@@ -19,4 +19,4 @@ class TrackerSchema(ma.Schema):
   class Meta:
     fields = ('tracker_name', 'root_url', 'search_text',
     'min_price', 'max_price', 'notify_email', 'notify_unit', 
-    'notify_interval', 'last_notified_ts')
+    'notify_interval', 'last_notified')
