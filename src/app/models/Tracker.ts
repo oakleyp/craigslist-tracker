@@ -1,4 +1,5 @@
 export default class Tracker {
+  _id: string;
   tracker_name: string;
   root_url: string;
   search_text: string;

@@ -1,0 +1,25 @@
+version: "3"
+services:
+  ng-craigslist-tracker:
+    build: ./
+    ports:
+      - "4200:4200"
+  trackerapi:
+    build: api_flask
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_HOST=database
+      - MONGODB_PORT=27017
+    links:
+      - database
+  scrapercron:
+    build: craigslist-scraper
+    env_file: .env
+    links: 
+      - database
+  database:
+    image: mongo
+    ports:
+      - "27017:27017"
+  

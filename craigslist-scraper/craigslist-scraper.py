@@ -4,13 +4,19 @@ import feedparser
 import pymongo
 import sys
 import yagmail
+import os
 from datetime import datetime
 
-client = pymongo.MongoClient("mongodb://localhost:27017")
+client = pymongo.MongoClient("mongodb://database")
 db = client['ng-craigslist-tracker']
 trackers_coll = db['tracker']
 
-yag = yagmail.SMTP('oakleys.craigslist.tracker@gmail.com')
+yagmail.register(
+  os.environ.get('GMAIL_ADDRESS'),
+  os.environ.get('GMAIL_PASSWORD')
+)
+
+yag = yagmail.SMTP(os.environ.get('GMAIL_ADDRESS'))
 
 def email_user(email, subject, body):
   yag.send(
@@ -158,3 +164,5 @@ def notify_users(trackers):
     )
 
 notify_users(trackers_coll)
+
+print('scraper was run')
