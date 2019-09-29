@@ -1,4 +1,4 @@
-# This is a first script in python, I'm sure I will grow to hate it as I learn more
+# This is a first script in python, I'm sure I will grow to be ashamed of it as I learn more
 import urllib.parse
 import feedparser
 import pymongo

@@ -1,2 +1,0 @@
-# run when the minute of each hour is evenly divisible by 30
-*/30 * * * * craigslist-scraper.py >> /var/log/scraper-cron.log 2>&1

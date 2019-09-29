@@ -1,2 +1,2 @@
 #!/bin/sh
-/home/craigslist-scraper/venv/bin/python craigslist-scraper.py >> /var/log/scraper-cron.log 2>&1
+/home/craigslist-scraper/venv/bin/python /home/craigslist-scraper/craigslist-scraper.py

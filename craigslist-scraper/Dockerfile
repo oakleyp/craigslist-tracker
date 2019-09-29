@@ -12,15 +12,14 @@ RUN apk --update add --virtual build-dependencies libffi-dev openssl-dev python-
   && apk del build-dependencies
 
 COPY craigslist-scraper.py craigslist-scraper.py
+COPY cronscript.sh cronscript.sh
+COPY scraper-cron.txt scraper-cron.txt
+COPY entry.sh entry.sh
+RUN /usr/bin/crontab scraper-cron.txt
 
 RUN chown -R craigslist-scraper:craigslist-scraper ./
-COPY cronscript.sh /etc/periodic/15min/craigslist-scraper
-RUN chown -R craigslist-scraper:craigslist-scraper /etc/periodic/15min/
 RUN touch /var/log/scraper-cron.log
 RUN chown craigslist-scraper:craigslist-scraper /var/log/scraper-cron.log
+RUN chmod a+x entry.sh cronscript.sh craigslist-scraper.py
 
-USER craigslist-scraper
-
-RUN chmod +x /etc/periodic/15min/craigslist-scraper
-
-CMD [ "crond", "-l", "2", "-f" ]
+CMD [ "./entry.sh" ]

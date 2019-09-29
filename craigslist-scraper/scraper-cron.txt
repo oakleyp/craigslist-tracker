@@ -1,0 +1,2 @@
+# run when the minute of each hour is evenly divisible by 30
+*/30 * * * * /home/craigslist-scraper/cronscript.sh >> /var/log/scraper-cron.log
