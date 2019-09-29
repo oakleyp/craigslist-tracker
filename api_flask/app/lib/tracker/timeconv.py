@@ -5,4 +5,4 @@ units = {
 }
 
 def convert_to_notify_interval(length, unit):
-  return length * units[unit]
+  return int(length) * units[unit]

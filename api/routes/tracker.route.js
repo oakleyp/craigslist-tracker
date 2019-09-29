@@ -5,7 +5,7 @@ const trackerRoutes = express.Router();
 const timeConv = require('../lib/tracker/timeConv');
 const Tracker = require('../models/Tracker');
 
-trackerRoutes.route('/add').post(function(req, res) {
+trackerRoutes.route('/').post(function(req, res) {
   const tracker = new Tracker(req.body.tracker);
 
   tracker.save()
@@ -22,7 +22,7 @@ trackerRoutes.route('/').get(function(req, res) {
     if (err) {
       res.json({message: `Error finding trackers for index route: ${err}`});
     } else {
-      res.json(trackers);
+      res.json({trackers});
     }
   });
 });
@@ -32,12 +32,12 @@ trackerRoutes.route('/:id').get(function (req, res) {
     if (!tracker) {
       res.status(404).json({message: `No tracker was found for ID ${req.params.id}`})
     } else {
-      res.json(tracker);
+      res.json({tracker});
     }
   })
 }); 
 
-trackerRoutes.route('/update/:id').post(function(req, res) {
+trackerRoutes.route('/:id').put(function(req, res) {
   Tracker.findById(req.params.id, function(err, tracker) {
       if (err) {
         res.json({message: `failed to save tracker: ${err}`});

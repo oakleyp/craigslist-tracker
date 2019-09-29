@@ -6,27 +6,27 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TrackerService {
 
-  uri = 'http://localhost:4000/tracker';
+  uri = 'http://localhost:5000';
 
   constructor(private http: HttpClient) { }
 
   addTracker(tracker) {
-    return this.http.post(`${this.uri}/add`, {tracker});
+    return this.http.post(`${this.uri}/tracker`, {tracker});
   }
 
   listTrackers() {
-    return this.http.get(`${this.uri}`);
+    return this.http.get(`${this.uri}/trackers`);
   }
 
   getTracker(id) {
-    return this.http.get(`${this.uri}/${id}`);
+    return this.http.get(`${this.uri}/tracker/${id}`);
   }
 
   updateTracker(id, tracker) {
-    return this.http.post(`${this.uri}/update/${id}`, {tracker});
+    return this.http.put(`${this.uri}/tracker/${id}`, {tracker});
   }
 
   deleteTracker(id) {
-    return this.http.delete(`${this.uri}/${id}`);
+    return this.http.delete(`${this.uri}/tracker/${id}`);
   }
 }

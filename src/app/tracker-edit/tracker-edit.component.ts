@@ -68,7 +68,7 @@ export class TrackerEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.ts.getTracker(params.id).subscribe((tracker: Tracker) => {
+      this.ts.getTracker(params.id).subscribe(({tracker}:{tracker: Tracker}) => {
         this.tracker = tracker;
       })
     });
