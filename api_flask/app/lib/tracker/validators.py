@@ -6,7 +6,5 @@ def valid_notify_interval(interval):
     try:
       if int(interval) <= 0:
         raise validation_err
-      else:
-        print(interval)
     except:
       raise validation_err
