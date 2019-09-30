@@ -2,9 +2,20 @@
 
 A web app for creating customizable Craigslist trackers that notify you when new or updated listings match your criteria.
 
-This app is currently at the weekend hackathon level of functionality. If you're comfortable building MEAN apps and setting up a cron job, this may be what you're looking for. This README will include some details of setting this up on a local server, but an unconventionally unpleasant amount of assembly is required at its current state.
+This app is currently at the weekend hackathon level of functionality. If you're comfortable building Docker containers or MEAN apps from source, this may be what you're looking for. This README will include some details of setting this up on a local server, but an unconventionally unpleasant amount of assembly is required at its current state.
 
-I have practically no prior experience writing scripts in python, and relatively little prior experience writing MEAN apps, this is just an excercise in trying to familiarize myself with working in those environments. Therein lies the reason for this disclaimer - despite my attempts to follow best practices while learning and building this over a weekend, this is in no way an enterprise-grade example yet. I was happy to see that Angular seems to work similar to any heavy JS framework with a lot of FRP concepts, and python seems to be not far off from ruby or perl where I'm comfortable.
+I had practically no prior experience writing scripts in python or using Docker when starting this project, and relatively little prior experience writing MEAN apps. This is just an excercise in trying to familiarize myself with working in those environments. Therein lies the reason for this disclaimer - despite my attempts to follow best practices while learning and building this over a couple weekends, this is in no way an enterprise-grade example yet. I was happy to see that Angular seems to work similar to any heavy JS framework with a lot of FRP concepts, and python seems to be not far off from ruby or perl where I'm comfortable.
+
+# Deploying the Flask implementation via Docker Compose
+Create file named `.env` in the root of this repo to declare the following environment variables:
+```
+GMAIL_ADDRESS=some_gmail_address@gmail.com # This is the email address from which notifications will be delivered
+GMAIL_PASSWORD=your_gmail_password
+```
+
+Run `docker-compose up --build` to deploy all docker containers on the current system.
+
+# Installing manually as a MEAN app
 
 ## Working environment
 * MongoDB 3.4.6
